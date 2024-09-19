@@ -1,0 +1,21 @@
+---
+- name: Install and configure DHCP
+  hosts: dhcp
+  tasks:
+    - name: Install DHCP package
+      yum:
+        name: dhcp-server
+        state: present
+
+    - name: Configure dhcp.conf
+      blockinfile:
+        path: /etc/dhcp/dhcpd.conf
+        block: |
+          subnet 10.0.0.0 netmask 255.255.255.0 {
+            range 10.0.0.100 10.0.0.254;
+          }
+
+    - name: Restart dhcp
+      systemd_service:
+        name: dhcpd
+        state: restarted

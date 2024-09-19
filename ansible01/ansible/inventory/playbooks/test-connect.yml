@@ -1,0 +1,14 @@
+---
+- name: Test connection to hosts using Ansible
+  hosts: all
+  tasks:
+    - name: Ping host
+      ping:
+
+    - name: Update host
+      yum:
+        name: '*'
+        state: latest
+
+    - name: Clean yum
+      shell: yum clean all

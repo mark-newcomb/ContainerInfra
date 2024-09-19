@@ -1,0 +1,4 @@
+ansible_ssh_user: root
+ansible_ssh_pass: ansibleinfra
+ansible_host: 10.0.0.2
+ansible_ssh_extra_args: '-o StrictHostKeyChecking=no'

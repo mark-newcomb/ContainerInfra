@@ -1,0 +1,67 @@
+version: '1'
+services:
+  ansible01:
+    privileged: true
+    build:
+      context: ansible01/
+      dockerfile: Dockerfile
+    container_name: ansible01
+    hostname: infraansible01
+    tty: true
+    networks:
+      custom_net:
+        ipv4_address: 10.0.0.2
+  dhcp01:
+    privileged: true
+    build:
+      context: dhcp01/
+      dockerfile: Dockerfile
+    container_name: dhcp01
+    hostname: infradhcp01
+    tty: true
+    networks:
+      custom_net:
+        ipv4_address: 10.0.0.3
+  dns01:
+    privileged: true
+    build:
+      context: dns01/
+      dockerfile: Dockerfile
+    container_name: dns01
+    hostname: infradns01
+    tty: true
+    networks:
+      custom_net:
+        ipv4_address: 10.0.0.4
+  test01:
+    privileged: true
+    build:
+      context: test01/
+      dockerfile: Dockerfile
+    container_name: test01
+    hostname: infratest01
+    tty: true
+    networks:
+      custom_net:
+        ipv4_address: 10.0.0.5
+  web01:
+    ports:
+      - "8888:80"
+    privileged: true
+    build:
+      context: web01/
+      dockerfile: Dockerfile
+    container_name: web01
+    hostname: infraweb01
+    tty: true
+    networks:
+      custom_net:
+        ipv4_address: 10.0.0.6
+
+networks:
+  custom_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.0.0/16
+          gateway: 10.0.0.1
